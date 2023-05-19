@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input.ng-invalid.ng-touched{
+  border: red;
+}

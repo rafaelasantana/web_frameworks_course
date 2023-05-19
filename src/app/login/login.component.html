@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="mat-headline-2" style="text-align: center;">Login</div>
+    <!-- implementation with form control -->
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="container">
+            <mat-form-field class="full">
+                <input matInput placeholder="Your email" formControlName="email" name="email">
+            </mat-form-field>
+            <mat-form-field class="full">
+                <input matInput placeholder="Your password" formControlName="password" name="password">
+            </mat-form-field>
+            <!-- button is disabled until the form is valid-->
+            <button [disabled]="!loginForm.valid" mat-raised-button color="primary">Login</button>
+        </div>
+    </form>
+    <div class="container">
+        <br>
+        <mat-display-4 style="text-align: center;">Don't have an account yet?
+            <a routerLink="/signup">Sign Up</a>
+        </mat-display-4>
+    </div>
+</div>

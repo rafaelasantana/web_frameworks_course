@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="mat-headline-2" style="text-align: center;">Sign Up</div>
+    <div class="container">
+        <!-- implementation with form -->
+        <form [formGroup]="signUpForm" (ngSubmit)="registerUser()">
+            <div class="container">
+                <mat-form-field class="full">
+                    <input matInput placeholder="Your email" name="email" formControlName="email">
+                </mat-form-field>
+                <mat-form-field class="full">
+                    <input matInput placeholder="Your password" name="password" formControlName="password">
+                </mat-form-field>
+                <mat-form-field class="full">
+                    <input matInput placeholder="Repeat Password" name="repeatPassword"
+                        formControlName="repeatPassword">
+                    <!-- show error message if passwords do not match -->
+                    <span *ngIf="signUpForm.errors?.['passwordMatchError']" style="color: red;">Passwords do not match</span>
+                </mat-form-field>
+                <mat-form-field class="full">
+                    <input matInput placeholder="Your company" name="company" formControlName="company">
+                </mat-form-field>
+                <mat-form-field class="full">
+                    <input matInput placeholder="Street" name="street" formControlName="street" type="text">
+                </mat-form-field>
+                <mat-form-field class="full">
+                    <input matInput placeholder="City" name="city" formControlName="city">
+                </mat-form-field>
+                <mat-form-field class="full">
+                    <input matInput placeholder="ZIP Code" name="zipCode" formControlName="zipCode">
+                </mat-form-field>
+                <button mat-raised-button color="primary" [disabled]="!signUpForm.valid">Register</button>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <br>
+        <mat-display-4 style="text-align: center;">Already have an account?
+            <a routerLink="/login">Login</a>
+        </mat-display-4>
+    </div>
+</div>
