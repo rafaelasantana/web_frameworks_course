@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="mat-headline-2" style="text-align: center;">Game</div>
+    <button mat-raised-button color="primary" (click)="sendHighscore()">Send Highscore</button>
+    <br>
+    <button mat-raised-button color="primary" (click)="fetchHighscores()">Show all Highscores</button>
+    <br>
+    <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+    <br>
+    <!-- Display the highscores section only when showHighscores is true -->
+    <div *ngIf="showHighscores">
+        <h2>Highscores:</h2>
+        <ul>
+        <li *ngFor="let highscore of highscores">
+            {{ highscore.username }} - {{ highscore.score }}
+        </li>
+        </ul>
+    </div>
+</div>

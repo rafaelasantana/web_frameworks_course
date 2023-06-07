@@ -4,15 +4,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 // import signup component
 import { SignupComponent } from './signup/signup.component';
+// import landing page component
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 
 const routes: Routes = [
-  // the component that has the empty path is the first one to load
+  // redirect to /login when page loads
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   // for other paths, eg 'login', access by localhost/login
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  // can also redirect to /signup when page loads
-  { path: '', redirectTo: '/signup', pathMatch: 'full' },
+  { path: 'landing', component: LandingPageComponent },
+
 
 ];
 

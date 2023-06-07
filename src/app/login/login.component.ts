@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { AuthService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +11,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
 
+  // inject router module to this component
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
+
   // array to store the signup users
   signupUsers: any[] = [];
-
-  // // object stores user's login credentials
-  // loginObj: any = {
-  //   email: '',
-  //   password: '',
-  // };
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -32,20 +32,26 @@ export class LoginComponent implements OnInit {
 
   // check user's credentials and login
   onLogin() {
-    console.log("this user: ");
-    console.warn(this.loginForm.value);
-    console.log("all users: ");
-    console.log(this.signupUsers);
+    // get email and password from the form
+    const email = this.loginForm.value['email'] as string;
+    const password = this.loginForm.value['password'] as string;
 
-    // check if there is a match for this user in the signupUsers
-    const userMatch = this.signupUsers.find(m => m.email == this.loginForm.value['email'] && m.password == this.loginForm.value['password']);
-    // alert that login works
-    if (userMatch != undefined) {
-      alert("Login successful.");
-    }
-    else {
-      alert("Login failed.");
-    }
+    // login with authService
+    this.authService.login(email, password).subscribe({
+      next: (response) => {
+        console.log('Login successful.');
+        // save user's token to the local storage
+        localStorage.setItem('authToken', response.token);
+        // set user's username to the userService
+        this.userService.setUsername(response.username);
+        // redirect logged in user to the landing page
+        this.router.navigate(['/landing']);
+      },
+      error: (error) => {
+        console.log('There was an error logging in: ', error);
+        alert('Login failed');
+      }
+    })
   }
 
   get email() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-
+import { AuthService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,22 +9,12 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, 
 })
 export class SignupComponent implements OnInit {
 
-  // array to store the signed-up users
-  signupUsers: any[] = [];
-
   // signup form
   signUpForm!: FormGroup;
 
-  // default user credentials
-  defaultUserCredentials: any = {
-    email: 'test@test.at',
-    password: '12345678',
-  };
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    // add default user credentials to the signupUsers array
-    this.addDefaultUser();
-
     // create signup form
     this.createForm();
   }
@@ -48,25 +38,19 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  // adds default user credentials to the signupUsers array
-  addDefaultUser() {
-    // add default credentials to signupUsers array
-    this.signupUsers.push(this.defaultUserCredentials);
-    // add signupUsers to the local storage
-    localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
-  }
-
-  // adds current user to the users array and add it to the local storage
+  // register user with the authService
   registerUser() {
-    // display form values in the console
     console.warn(this.signUpForm.value);
-    // add this user to the signupUsers array
-    this.signupUsers.push(this.signUpForm.value);
-    // update signupUsers in the local storage with the new user
-    localStorage.setItem('signupUsers', JSON.stringify(this.signupUsers));
-    // print all registered users:
-    console.log("all users:");
-    console.log(this.signupUsers);
+    // register user with the authService
+    this.authService.register(this.signUpForm.value).subscribe({
+      next: () => {
+        console.log('Signup successful.');
+      },
+      error: (error) => {
+        console.log('There was an error signing up: ', error);
+      }
+
+    })
   }
 }
 
