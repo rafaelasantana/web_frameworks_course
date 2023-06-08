@@ -5,6 +5,11 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 // package to generate universally unique identifiers (UUIDs)
 const { v4: uuidv4 } = require('uuid');
+// connect to mongoDB
+const mongoose = require('mongoose');
+// import mongoose models
+const { HighScore, HighScoreList } = require('../models/highscore-db-table.model');
+const { User } = require('../models/user-db-table.model');
 
 // in-memory database of users with default user
 const usersDB = [
